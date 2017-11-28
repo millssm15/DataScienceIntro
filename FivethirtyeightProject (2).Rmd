@@ -1,0 +1,54 @@
+---
+title: "fivethirtyeightProject"
+author: "Sara Mills"
+date: "9/7/2017"
+output: html_document
+---
+
+
+```{r}
+library(tidyverse)
+library(fivethirtyeight)
+```
+
+
+```{r}
+head(bad_drivers)
+```
+
+```{r}
+str(bad_drivers)
+```
+
+Graph with one variable: 
+```{r}
+ggplot(data = bad_drivers, mapping = aes(x = perc_speeding)) +geom_histogram()
+```
+
+Above is a histogram of the percentage of drivers involved in fatal collisions who were speeding. The coordinate system is cartesian and the scale is numeric. 
+
+
+
+Graph with two variables:
+
+```{r}
+ggplot(data = bad_drivers, mapping = aes(x = perc_no_previous , y = insurance_premiums)) +geom_point()
+```
+
+A graph with 3 or more variables
+
+```{r}
+ggplot(data = bad_drivers, mapping = aes(x = perc_no_previous , y = perc_speeding, color = perc_alcohol)) +geom_point()
+```
+
+```{r}
+bad_drivers <- mutate(bad_drivers, num_dd = (perc_alcohol * num_drivers))
+str(bad_drivers)
+bad_drivers <- mutate(bad_drivers, num_collisions = (num_drivers - num_dd))
+ggplot(data = bad_drivers, mapping = aes(x= state, y = num_dd)) + geom_bar(stat = "identity") + coord_flip() 
+
+```
+
+
+
+
